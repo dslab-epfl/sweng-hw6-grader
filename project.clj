@@ -3,4 +3,8 @@
   :url "http://sonarqube.epfl.ch/"
   :license {:name "GNU Affero General Public License"
             :url "https://www.gnu.org/licenses/agpl.html"}
-  :dependencies [[org.clojure/clojure "1.5.1"]])
+  :dependencies [[org.clojure/clojure "1.5.1"]
+                 [korma "0.3.0-RC5"]
+                 [org.postgresql/postgresql "9.2-1002-jdbc4"]
+                 [ring/ring-jetty-adapter "1.2.1"]
+                 [compojure "1.1.3"]])
