@@ -12,3 +12,6 @@ pom.xml.asc
 # Database stuff
 /setup.env
 /pg/
+
+# Vim stuff
+.*.swp

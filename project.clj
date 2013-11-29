@@ -7,4 +7,5 @@
                  [korma "0.3.0-RC5"]
                  [org.postgresql/postgresql "9.2-1002-jdbc4"]
                  [ring/ring-jetty-adapter "1.2.1"]
-                 [compojure "1.1.3"]])
+                 [compojure "1.1.3"]
+                 [clj-http "0.7.7"]])
