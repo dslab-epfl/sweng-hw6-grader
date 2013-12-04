@@ -1,13 +1,28 @@
 (ns sweng-hw6-grader.core
-  (:require [clj-http.client :as client]))
+  (:use [compojure.core :only [defroutes GET]]
+        [ring.adapter.jetty :as ring])
+  (:require [clj-http.client :as client]
+            [clojure.pprint :as pprint]
+            [clojure.string :as string]
+            [clojure.java.io :as io]
+            [compojure.handler :as handler]
+            [compojure.route :as route]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defroutes routes
+  (GET "/" [] "<h2>SwEng 2013 HW6 Contest</h2><p>Coming soon...</p>"))
 
+(def application (handler/site routes))
 
-(defn tidbits []
+(defn start [port]
+  (run-jetty application {:port port
+                          :join? false}))
+(defn -main []
+  (let [port (Integer/parseInt (or (System/getenv "PORT") "8080"))]
+    (start port)))
+
+(defn tidbits 
+  "Random useful bits of code"
+  []
   ; Getting an OAuth2 token:
   (client/post "https://api.github.com/authorizations"
                {:basic-auth ["Sjlver" "2wXVf3EBuySH"]
@@ -31,7 +46,7 @@
                                 :as :json
                                 :headers user-agent} params)
              response (method full-url full-params)]
-         (pprint response)
+         (pprint/pprint response)
          response))))
   (def g (github-helper client/get))
   (def p (github-helper client/post))
@@ -60,9 +75,9 @@
      })  
 
   (defn forall-repos [f]
-    (with-open [rdr (reader "/home/jowagner/phd/05sweng/sweng-quizapp/Homeworks/Homework6/scripts/sonar_credentials.txt")]
+    (with-open [rdr (io/reader "/home/jowagner/phd/05sweng/sweng-quizapp/Homeworks/Homework6/scripts/sonar_credentials.txt")]
       (doseq [line (line-seq rdr)]
-        (let [[name-nice name-lower password] (split line #"\s+")]
+        (let [[name-nice name-lower password] (string/split line #"\s+")]
           (if (not= name-lower "betatest")
             (f (str "sweng-2013-team-" name-lower)))))))
 
