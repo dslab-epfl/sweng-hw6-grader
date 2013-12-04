@@ -10,5 +10,4 @@
                  [ring/ring-jetty-adapter "1.2.1"]
                  [compojure "1.1.3"]
                  [clj-http "0.7.7"]]
-  :java-agents [[com.newrelic.agent.java/newrelic-agent "3.2.0"]]
   :main sweng-hw6-grader.core)
