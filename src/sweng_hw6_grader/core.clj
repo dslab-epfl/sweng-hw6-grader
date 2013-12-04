@@ -20,18 +20,22 @@
               {:oauth-token "72ba628e6c0e29ecb5a8c36e61d611048bcbb442" :debug true})
 
   ; Helper for easier getting; adds Github prefix and OAuth token automatically
-  (defn g 
-    ([url]
-     (g url {}))
-    ([url params]
-     (let [full-url (str "https://api.github.com" url)
-           user-agent {"User-Agent" "SwEng HW6 Grader"}
-           full-params (conj {:oauth-token "c51e6e73fe7bf706942ef41eda1a10435d130027"
-                              :as :json
-                              :headers user-agent} params)
-           response (client/get full-url full-params)]
-       (pprint response)
-       response)))
+  ; Create a github helper
+  (defn github-helper [method]
+    (fn helper 
+      ([url] (helper url {}))
+      ([url params]
+       (let [full-url (str "https://api.github.com" url)
+             user-agent {"User-Agent" "SwEng HW6 Grader"}
+             full-params (conj {:oauth-token "c51e6e73fe7bf706942ef41eda1a10435d130027"
+                                :as :json
+                                :headers user-agent} params)
+             response (method full-url full-params)]
+         (pprint response)
+         response))))
+  (def g (github-helper client/get))
+  (def p (github-helper client/post))
+  (def d (github-helper client/delete))
 
   ; Interesting URLs:
   ; /repos/Sjlver/github-issues-tests/issues/3/events
@@ -54,4 +58,16 @@
      :labels (map :name (:labels issue))
      :repository (-> issue :repository :full_name)
      })  
+
+  (defn forall-repos [f]
+    (with-open [rdr (reader "/home/jowagner/phd/05sweng/sweng-quizapp/Homeworks/Homework6/scripts/sonar_credentials.txt")]
+      (doseq [line (line-seq rdr)]
+        (let [[name-nice name-lower password] (split line #"\s+")]
+          (if (not= name-lower "betatest")
+            (f (str "sweng-2013-team-" name-lower)))))))
+
+  (forall-repos #(p (str "/repos/sweng-epfl/" % "/labels")
+                    {:body (client/json-encode {:name "Homework6Contest"
+                                                :color "FFFF00"})}))
+
 )
