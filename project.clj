@@ -3,6 +3,7 @@
   :url "http://sonarqube.epfl.ch/"
   :license {:name "GNU Affero General Public License"
             :url "https://www.gnu.org/licenses/agpl.html"}
+  :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [korma "0.3.0-RC5"]
                  [org.postgresql/postgresql "9.2-1002-jdbc4"]
