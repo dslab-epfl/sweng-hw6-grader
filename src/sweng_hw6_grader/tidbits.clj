@@ -8,7 +8,7 @@
   "Get an OAuth2 token from GitHub"
   []
   (client/post "https://api.github.com/authorizations"
-               {:basic-auth ["Sjlver" "2wXVf3EBuySH"]
+               {:basic-auth ["Sjlver" (System/getenv "GITHUB_PASSWORD")]
                 :body (client/json-encode {:note "SwEng HW6 Grader"
                                            :scopes ["repo"]})
                 :debug true}))
@@ -23,7 +23,7 @@
     ([url params]
      (let [full-url (str "https://api.github.com" url)
            user-agent {"User-Agent" "SwEng HW6 Grader"}
-           full-params (conj {:oauth-token "c51e6e73fe7bf706942ef41eda1a10435d130027"
+           full-params (conj {:oauth-token (System/getenv "GITHUB_OAUTH_TOKEN")
                               :as :json
                               :headers user-agent} params)
            response (method full-url full-params)]
