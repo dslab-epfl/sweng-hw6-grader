@@ -6,10 +6,15 @@
   (hiccup/html5
     [:head
      [:meta {:charset "utf-8"}]
+     [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
+     (hiccup/include-css "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
      [:title title]]
     [:body
+     [:div.container
       [:h1 "SwEng 2013 Homework 6 Contest"]
-      body]))
+      body
+      (hiccup/include-js "https://code.jquery.com/jquery.js")
+      (hiccup/include-js "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")]]))
 
 
 (def issue-titles {:violations "Issues"
