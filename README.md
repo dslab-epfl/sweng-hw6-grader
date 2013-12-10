@@ -1,10 +1,13 @@
 # sweng-hw6-grader
 
-Computes scores for homework six of sweng.epfl.ch.
+A small web application that computes scores for homework six of EPFL's
+software engineering course. It aggregates data from Jenkins and SonarQube.
 
 ## Usage
 
-Point you browser to sonarqube.epfl.ch port 10000
+To run this on your computer, use
+
+    lein ring server
 
 ## License
 
