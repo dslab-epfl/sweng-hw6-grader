@@ -20,7 +20,7 @@
          [:span.icon-bar]
          [:span.icon-bar]
          [:span.icon-bar]]
-        [:a.navbar-brand {:href "/"} "SwEng Homework 6 Contest"]]
+        [:a.navbar-brand {:href "/homework6contest"} "SwEng Homework 6 Contest"]]
        [:div {:class "collapse navbar-collapse"}
         [:ul {:class "nav navbar-nav"}
          [:li.active [:a {:href "/homework6contest"} "Home"]]
