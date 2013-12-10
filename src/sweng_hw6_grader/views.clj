@@ -8,6 +8,7 @@
      [:meta {:charset "utf-8"}]
      [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
      (hiccup/include-css "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
+     (hiccup/include-css "/css/style.css")
      [:title title]]
     [:body
      [:div.container
@@ -40,7 +41,7 @@
                    :false_positive_issues "False positives"})
 
 (defn score-table [metrics initial final]
-  [:table
+  [:table.scores
    [:tr (map (fn [h] [:th h]) (concat [""] (map issue-titles metrics)))]
    [:tr [:th "Initial"]
         (map (fn [d] [:td d]) initial)]

@@ -9,7 +9,7 @@ To run this on your computer, use
 
     lein ring server
 
-You also need to set a number of environment variables, notably a
+You also need to set a number of environment variables, notably
 GITHUB\_OAUTH\_TOKEN and SONARQUBE\_ADMIN\_PASSWORD.
 
 ## License

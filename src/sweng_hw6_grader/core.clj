@@ -1,6 +1,7 @@
 (ns sweng-hw6-grader.core
   (:require [ring.adapter.jetty :as jetty]
             [ring.util.response :as resp]
+            [ring.middleware.content-type :as content-type]
             [compojure.core :as compojure]
             [compojure.handler :as handler]
             [compojure.route :as route]
@@ -34,15 +35,6 @@
   [handler]
   (with-uri-rewrite handler uri-snip-slash))
 
-; Middleware to add content-type and encoding
-
-(defn- with-content-type
-  "Adds a default content type"
-  [handler]
-  (fn [request]
-    (let [response (handler request)]
-      (resp/content-type response "text/html; charset=utf-8"))))
-
 ; The routes and app init logic
 
 (compojure/defroutes routes
@@ -50,12 +42,13 @@
   (compojure/GET "/homework6contest" [] (resources/resources))
   (compojure/GET "/homework6contest/about" [] (views/about))
   (compojure/GET "/homework6contest/:resource" [resource] (scores/score resource))
+  (route/resources "/")
   (route/not-found (views/four-oh-four)))
 
 (def application
   (-> (handler/site routes)
       ignore-trailing-slash
-      with-content-type))
+      content-type/wrap-content-type))
 
 (defn start [port]
   (jetty/run-jetty application {:port port

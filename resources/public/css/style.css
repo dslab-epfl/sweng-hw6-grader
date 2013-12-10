@@ -1,0 +1,15 @@
+table.scores tr:first-child th {
+    border-bottom: 1px solid black;
+}
+
+table.scores tr th:first-child {
+    border-right: 1px solid black;
+}
+
+table.scores td {
+    text-align: right;
+}
+
+table.scores th, table.scores td {
+    padding: 2px 5px;
+}
