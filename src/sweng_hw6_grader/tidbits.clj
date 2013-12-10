@@ -27,7 +27,7 @@
                               :as :json
                               :headers user-agent} params)
            response (method full-url full-params)]
-       (pprint/pprint response)
+       (if (not (System/getenv "LEIN_NO_DEV")) (pprint/pprint response))
        response))))
 (def g (github-helper client/get))
 (def p (github-helper client/post))
@@ -81,7 +81,7 @@
                               :as :json
                               :headers user-agent} params)
            response (method full-url full-params)]
-       (pprint/pprint response)
+       (if (not (System/getenv "LEIN_NO_DEV")) (pprint/pprint response))
        response))))
 (def sg (sonar-helper client/get))
 (def sp (sonar-helper client/post))
