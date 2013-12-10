@@ -28,12 +28,14 @@
     score))
 
 (defn score [resource]
-  (let [metrics [:violations :blocker_violations :critical_violations
-                 :major_violations :minor_violations :info_violations
-                 :false_positive_issues]
-        cells (get-timemachine metrics resource)
-        initial (initial-issues cells)
-        final   (final-issues cells)
-        score   (compute-score metrics initial final)]
-    (views/score-view resource metrics initial final score)))
+  (try
+    (let [metrics [:violations :blocker_violations :critical_violations
+                   :major_violations :minor_violations :info_violations
+                   :false_positive_issues]
+          cells (get-timemachine metrics resource)
+          initial (initial-issues cells)
+          final   (final-issues cells)
+          score   (compute-score metrics initial final)]
+      (views/score-view resource metrics initial final score))
+    (catch Exception e (views/layout "Error" "Sorry, this didn't work..."))))
 
