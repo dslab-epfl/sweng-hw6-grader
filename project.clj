@@ -9,5 +9,8 @@
                  [org.postgresql/postgresql "9.2-1002-jdbc4"]
                  [ring/ring-jetty-adapter "1.2.1"]
                  [compojure "1.1.3"]
-                 [clj-http "0.7.7"]]
+                 [clj-http "0.7.7"]
+                 [hiccup "1.0.4"]]
+  :plugins [[lein-ring "0.8.8"]]
+  :ring {:handler sweng-hw6-grader.core/application}
   :main sweng-hw6-grader.core)
