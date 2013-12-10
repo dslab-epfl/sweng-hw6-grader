@@ -1,8 +1,10 @@
 (ns sweng-hw6-grader.core
-  (:use [compojure.core :only [defroutes GET]])
   (:require [ring.adapter.jetty :as jetty]
             [ring.util.response :as resp]
-            [compojure.handler :as handler]))
+            [compojure.core :as compojure]
+            [compojure.handler :as handler]
+            [sweng-hw6-grader.views :as views]
+            [sweng-hw6-grader.scores :as scores]))
 
 ; Some middleware to ignore trailing slashes in URLs
 
@@ -32,9 +34,10 @@
 
 ; The routes and app init logic
 
-(defroutes routes
-  (GET "/" [] (resp/redirect "/homework6contest"))
-  (GET "/homework6contest" [] "<h2>SwEng 2013 HW6 Contest</h2><p>Coming soon...</p>"))
+(compojure/defroutes routes
+  (compojure/GET "/" [] (resp/redirect "/homework6contest"))
+  (compojure/GET "/homework6contest" [] (views/index))
+  (compojure/GET "/homework6contest/:resource" [resource] (scores/score resource)))
 
 (def application
   (-> (handler/site routes)
