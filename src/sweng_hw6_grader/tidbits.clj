@@ -68,3 +68,35 @@
   (forall-repos #(p (str "/repos/sweng-epfl/" % "/labels")
                     {:body (client/json-encode {:name "Homework6Contest"
                                                 :color "FFFF00"})})))
+
+(defn sonar-helper
+  "Create a SonarQube helper that automatically adds username and password"
+  [method]
+  (fn helper 
+    ([url] (helper url {}))
+    ([url params]
+     (let [full-url (str "https://jenkins.epfl.ch/sonarqube/api" url)
+           user-agent {"User-Agent" "SwEng HW6 Grader"}
+           full-params (conj {:basic-auth ["admin" (System/getenv "SONARQUBE_ADMIN_PASSWORD")]
+                              :as :json
+                              :headers user-agent} params)
+           response (method full-url full-params)]
+       (pprint/pprint response)
+       response))))
+(def sg (sonar-helper client/get))
+(def sp (sonar-helper client/post))
+(def sd (sonar-helper client/delete))
+
+(defn get-issue-count []
+  (sg "/resources?metrics=violations,blocker_violations,critical_violations,major_violations,minor_violations,info_violations,false_positive_issues&resource=sweng-2013-team-master"))
+
+(defn get-false-positives []
+  (sg "/issues/search?componentRoots=sweng-2013-team-master&pageSize=3&resolutions=FALSE-POSITIVE"))
+
+(defn get-sonar-resources []
+  (map :key (:body (sg "/resources"))))
+
+(defn get-issue-counts [resource]
+  (let [query (format "/timemachine?metrics=violations,blocker_violations,critical_violations,major_violations,minor_violations,info_violations,false_positive_issues&resource=%s" resource)
+        response (sg query)]
+    (-> response :body first :cells)))

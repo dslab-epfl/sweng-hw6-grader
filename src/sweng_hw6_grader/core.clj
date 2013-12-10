@@ -5,6 +5,7 @@
             [compojure.handler :as handler]))
 
 ; Some middleware to ignore trailing slashes in URLs
+
 (defn with-uri-rewrite
   "Rewrites a request uri with the result of calling f with the
    request's original uri.  If f returns nil the handler is not called."
@@ -28,6 +29,8 @@
   "Makes routes match regardless of whether or not a uri ends in a slash."
   [handler]
   (with-uri-rewrite handler uri-snip-slash))
+
+; The routes and app init logic
 
 (defroutes routes
   (GET "/" [] (resp/redirect "/homework6contest"))
