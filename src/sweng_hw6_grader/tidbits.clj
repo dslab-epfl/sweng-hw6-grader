@@ -14,7 +14,7 @@
                 :debug true}))
 
 
-(defn github-helper
+(defn- github-helper
   "Helper for easier getting; adds Github prefix and OAuth token automatically
   Create a github helper"
   [method]
@@ -29,9 +29,9 @@
            response (method full-url full-params)]
        (if (not (System/getenv "LEIN_NO_DEV")) (pprint/pprint response))
        response))))
-(def g (github-helper client/get))
-(def p (github-helper client/post))
-(def d (github-helper client/delete))
+(def gg (github-helper client/get))
+(def gp (github-helper client/post))
+(def gd (github-helper client/delete))
 
 ; Interesting URLs:
 ; /repos/Sjlver/github-issues-tests/issues/3/events
@@ -65,7 +65,7 @@
 (defn create-hw6-contest-labels
   "Creates Homework6Contest labels in all sweng repos' issue trackers"
   []
-  (forall-repos #(p (str "/repos/sweng-epfl/" % "/labels")
+  (forall-repos #(gp (str "/repos/sweng-epfl/" % "/labels")
                     {:body (client/json-encode {:name "Homework6Contest"
                                                 :color "FFFF00"})})))
 

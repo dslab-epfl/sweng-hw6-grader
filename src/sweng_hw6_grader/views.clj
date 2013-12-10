@@ -12,9 +12,6 @@
       body]))
 
 
-(defn index []
-  (layout "Homework 6 Contest" [:p "Coming soon..."]))
-
 (def issue-titles {:violations "Issues"
                    :blocker_violations "Blocker"
                    :critical_violations "Critical"
@@ -39,9 +36,15 @@
            [:h2 "Score"]
            [:p "Your current score is " (format "%.0f" score) " points."]]))
 
+
 (defn resources [res]
   (layout "Homework 6 Contest"
           [:div
            [:p "Choose your project"]
            [:ul
             (map (fn [r] [:li [:a {:href (str "/homework6contest/" r)} r]]) res)]]))
+
+
+(defn four-oh-four []
+  {:status 404
+   :body (layout "Not found..." [:p "Sorry, the thing you're looking for isn't here."])})
