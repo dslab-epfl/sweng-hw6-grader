@@ -11,10 +11,24 @@
      [:title title]]
     [:body
      [:div.container
+     [:div {:class "navbar navbar-default" :role "navigation"}
+      [:div.container
+       [:div.navbar-header
+        [:button {:type "button" :class "navbar-toggle" :data-toggle "collapse" :data-target ".navbar-collapse"}
+         [:span.sr-only "Toggle navigation"]
+         [:span.icon-bar]
+         [:span.icon-bar]
+         [:span.icon-bar]]
+        [:a.navbar-brand {:href "/"} "SwEng Homework 6 Contest"]]
+       [:div {:class "collapse navbar-collapse"}
+        [:ul {:class "nav navbar-nav"}
+         [:li.active [:a {:href "/homework6contest"} "Home"]]
+         [:li [:a {:href "/homework6contest/about"} "About"]]]]]]
+     [:div.container
       [:h1 "SwEng 2013 Homework 6 Contest"]
       body
       (hiccup/include-js "https://code.jquery.com/jquery.js")
-      (hiccup/include-js "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")]]))
+      (hiccup/include-js "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")]]]))
 
 
 (def issue-titles {:violations "Issues"
@@ -48,6 +62,16 @@
            [:p "Choose your project"]
            [:ul
             (map (fn [r] [:li [:a {:href (str "/homework6contest/" r)} r]]) res)]]))
+
+
+(defn about []
+  (layout "Homework 6 Contest: About"
+          [:div
+           [:h2 "About"]
+           [:p "A grading script for EPFL's SwEng Course, 2013 edition."]
+           [:p "Copyright &copy; 2013 Jonas Wagner"]
+           [:p "This script is released under the GNU Affero General Public License"]
+           [:p "See " [:a {:href "https://github.com/dslab-epfl/sweng-hw6-grader"} "the source on GitHub"]]]))
 
 
 (defn four-oh-four []

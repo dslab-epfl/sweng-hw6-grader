@@ -48,6 +48,7 @@
 (compojure/defroutes routes
   (compojure/GET "/" [] (resp/redirect "/homework6contest"))
   (compojure/GET "/homework6contest" [] (resources/resources))
+  (compojure/GET "/homework6contest/about" [] (views/about))
   (compojure/GET "/homework6contest/:resource" [resource] (scores/score resource))
   (route/not-found (views/four-oh-four)))
 
