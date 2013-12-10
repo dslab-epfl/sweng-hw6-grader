@@ -41,8 +41,8 @@
   (compojure/GET "/" [] (resp/redirect "/homework6contest"))
   (compojure/GET "/homework6contest" [] (resources/resources))
   (compojure/GET "/homework6contest/about" [] (views/about))
+  (route/resources "/homework6contest/public/")
   (compojure/GET "/homework6contest/:resource" [resource] (scores/score resource))
-  (route/resources "/")
   (route/not-found (views/four-oh-four)))
 
 (def application

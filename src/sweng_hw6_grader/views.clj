@@ -8,7 +8,7 @@
      [:meta {:charset "utf-8"}]
      [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
      (hiccup/include-css "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css")
-     (hiccup/include-css "/css/style.css")
+     (hiccup/include-css "/homework6contest/public/css/style.css")
      [:title title]]
     [:body
      [:div.container
