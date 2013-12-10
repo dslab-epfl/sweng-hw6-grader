@@ -38,3 +38,10 @@
            (score-table metrics initial final)
            [:h2 "Score"]
            [:p "Your current score is " (format "%.0f" score) " points."]]))
+
+(defn resources [res]
+  (layout "Homework 6 Contest"
+          [:div
+           [:p "Choose your project"]
+           [:ul
+            (map (fn [r] [:li [:a {:href (str "/homework6contest/" r)} r]]) res)]]))

@@ -23,7 +23,7 @@
         blocker-score (max 0 (- 10 (* 10 blocker-issues)))
         critical-score (max 0 (- 20 (* 2 critical-issues)))
         improvement (/ (* 100.0 (- initial-issues final-issues)) initial-issues)
-        improvement-score (min 20 (* (/ 2.0 3.0) improvement))
+        improvement-score (min 20.0 (* (/ 2.0 3.0) improvement))
         score (+ blocker-score critical-score improvement-score)]
     score))
 

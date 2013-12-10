@@ -4,6 +4,7 @@
             [compojure.core :as compojure]
             [compojure.handler :as handler]
             [sweng-hw6-grader.views :as views]
+            [sweng-hw6-grader.resources :as resources]
             [sweng-hw6-grader.scores :as scores]))
 
 ; Some middleware to ignore trailing slashes in URLs
@@ -36,7 +37,7 @@
 
 (compojure/defroutes routes
   (compojure/GET "/" [] (resp/redirect "/homework6contest"))
-  (compojure/GET "/homework6contest" [] (views/index))
+  (compojure/GET "/homework6contest" [] (resources/resources))
   (compojure/GET "/homework6contest/:resource" [resource] (scores/score resource)))
 
 (def application
