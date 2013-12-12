@@ -51,8 +51,8 @@
       content-type/wrap-content-type))
 
 (defn start [port]
-  (jetty/run-jetty application {:port port
-                          :join? false}))
+  (jetty/run-jetty application {:port port :join? false}))
+
 (defn -main []
   (let [port (Integer/parseInt (or (System/getenv "PORT") "8080"))]
     (start port)))
