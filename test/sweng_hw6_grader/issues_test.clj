@@ -1,6 +1,8 @@
 (ns sweng-hw6-grader.issues-test
   (:require [midje.sweet :refer :all]
             [clj-http.fake :as fake]
+            [korma.core :refer :all]
+            [sweng-hw6-grader.db :as db]
             [sweng-hw6-grader.http-test :refer :all]
             [sweng-hw6-grader.issues :refer :all]))
 
@@ -20,4 +22,7 @@
           "when I put in the tag field dwrtçhtrf the tag is not dwrt,\n                      htrf but the tag dwrtçhtrf in offline mode.",
           :user "SomeStudent",
           :labels ("Homework6Contest"),
-          :repository "sweng-epfl/sweng-2013-team-master"}))))
+          :repository "sweng-epfl/sweng-2013-team-master"}))
+    (fact "It can store issues in a database"
+      (update-issues-database)
+      (select db/issues (fields :id)) => [24321855, 24293198])))

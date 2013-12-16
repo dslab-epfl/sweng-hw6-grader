@@ -16,12 +16,12 @@
    :user (-> issue :user :login)
    :labels (map :name (:labels issue))
    :repository (-> issue :repository :full_name)
-   })  
+   })
 
 (defn fetch-issues-since
   "Retrieves a list of github issues in the sweng-epfl organization, starting
   from the given date
-  
+
   param since: the date, as string in ISO 8601 format: 2013-11-29T08:59:59Z"
   ([] (fetch-issues-since "2013-12-13T18:00:00Z"))
   ([since]
@@ -30,3 +30,4 @@
         parsed-issues (map parse-issue raw-issues)]
     parsed-issues)))
 
+(defn update-issues-database [] nil)
