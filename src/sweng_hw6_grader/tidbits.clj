@@ -1,6 +1,5 @@
 (ns sweng-hw6-grader.tidbits
   (:require [clj-http.client :as client]
-            [clojure.pprint :as pprint]
             [clojure.string :as string]
             [clojure.java.io :as io]))
 
@@ -27,7 +26,6 @@
                               :as :json
                               :headers user-agent} params)
            response (method full-url full-params)]
-       (if (not (System/getenv "LEIN_NO_DEV")) (pprint/pprint response))
        response))))
 (def gg (github-helper client/get))
 (def gp (github-helper client/post))
@@ -39,21 +37,6 @@
 ; /repos/Sjlver/github-issues-tests/issues/3
 ; /orgs/sweng-epfl/issues?filter=all&since=2013-11-29T08:59:59Z
 ; (map #(select-keys % [:title :comments_url]) (:body response))
-
-; What do I need from issues?
-; - Labels (a set of strings will do)
-; - ID
-; - Title
-; - Creator
-; - Repo ID
-
-(defn parse-issue [issue]
-  {:id (:id issue)
-   :title (:title issue)
-   :user (-> issue :user :login)
-   :labels (map :name (:labels issue))
-   :repository (-> issue :repository :full_name)
-   })  
 
 (defn forall-repos [f]
   (with-open [rdr (io/reader "/home/jowagner/phd/05sweng/sweng-quizapp/Homeworks/Homework6/scripts/sonar_credentials.txt")]
@@ -81,7 +64,6 @@
                               :as :json
                               :headers user-agent} params)
            response (method full-url full-params)]
-       (if (not (System/getenv "LEIN_NO_DEV")) (pprint/pprint response))
        response))))
 (def sg (sonar-helper client/get))
 (def sp (sonar-helper client/post))

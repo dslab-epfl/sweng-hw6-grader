@@ -17,21 +17,21 @@
         \"key\":\"sweng-2013-team-master\",
         \"name\":\"Master\",
         \"scope\":\"PRJ\",
-        \"qualifier\":\"TRK\"
-        \"date\":\"2013-12-10T15:46:08+0100\"
-        \"creationDate\":\"2013-12-05T10:16:56+0100\"
-        \"lname\":\"Master\"
-        \"lang\":\"java\"
-        \"version\":\"1.0\"}
-        {\"id\":1781
-        \"key\":\"sweng-2013-team-rocket\"
-        \"name\":\"Rocket\"
-        \"scope\":\"PRJ\"
-        \"qualifier\":\"TRK\"
-        \"date\":\"2013-12-12T15:35:32+0100\"
-        \"creationDate\":\"2013-12-04T12:24:06+0100\"
-        \"lname\":\"Rocket\"
-        \"lang\":\"java\"
+        \"qualifier\":\"TRK\",
+        \"date\":\"2013-12-10T15:46:08+0100\",
+        \"creationDate\":\"2013-12-05T10:16:56+0100\",
+        \"lname\":\"Master\",
+        \"lang\":\"java\",
+        \"version\":\"1.0\"},
+        {\"id\":1781,
+        \"key\":\"sweng-2013-team-rocket\",
+        \"name\":\"Rocket\",
+        \"scope\":\"PRJ\",
+        \"qualifier\":\"TRK\",
+        \"date\":\"2013-12-12T15:35:32+0100\",
+        \"creationDate\":\"2013-12-04T12:24:06+0100\",
+        \"lname\":\"Rocket\",
+        \"lang\":\"java\",
         \"version\":\"1.0\"}]"})
 
    "https://jenkins.epfl.ch/sonarqube/api/timemachine?metrics=violations,blocker_violations,critical_violations,major_violations,minor_violations,info_violations,false_positive_issues&resource=sweng-2013-team-master"
@@ -48,7 +48,7 @@
                 {\"d\":\"2013-12-10T15:19:32+0100\",\"v\":[1415,0,179,757,452,27,0]},
                 {\"d\":\"2013-12-10T15:46:08+0100\",\"v\":[1414,0,178,757,452,27,1]}]}]"})
 
-    "https://api.github.com/orgs/sweng-epfl/issues?filter=all&since=2013-12-13T19:00:00Z"
+    "https://api.github.com/orgs/sweng-epfl/issues?filter=all&since=2013-12-13T18:00:00Z"
     (fn [req] {:status 200 :body
     "[
       {
@@ -183,7 +183,7 @@
           \"body\": \"when I put in the tag field dwrtçhtrf the tag is not dwrt,
                       htrf but the tag dwrtçhtrf in offline mode.\"
       }
-    ]"
+    ]"})
 
    ; Add a catch-all fake route to enjure tests don't access the network
    #".*" (fn [req] {:status 500 :body ""})})
