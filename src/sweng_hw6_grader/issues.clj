@@ -17,7 +17,7 @@
    :title (:title issue)
    :body (:body issue)
    :user (-> issue :user :login)
-   :labels (map :name (:labels issue))
+   :labels (set (map :name (:labels issue)))
    :repository (-> issue :repository :full_name)
    :created_at (:created_at issue)
    :updated_at (:updated_at issue)
@@ -44,11 +44,11 @@
                             (fields :updated_at)
                             (order :updated_at :desc)
                             (limit 1))]
-    (first most-recent-issues)))
+    (:updated_at (first most-recent-issues))))
 
 (defn update-issues-database []
   (let [last-update (or (compute-last-update-timestamp) earliest-issue-timestamp)
-        issues (fetch-issues-since last-update)
-        formatted-issues (map #(update-in % [:labels] (partial string/join ",")) issues)]
-    (insert db/issues (values formatted-issues))))
+        issues (fetch-issues-since last-update)]
+    (if (seq issues)
+      (insert db/issues (values issues)))))
 

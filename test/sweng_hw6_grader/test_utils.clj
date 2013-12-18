@@ -1,5 +1,8 @@
-(ns sweng-hw6-grader.http-test
-  (:require [sweng-hw6-grader.core :refer [application]]))
+(ns sweng-hw6-grader.test-utils
+  (:require [midje.sweet :refer :all]
+            [clj-http.fake :as fake]
+            [sweng-hw6-grader.core :refer [application]]
+            [sweng-hw6-grader.db :as db]))
 
 (defn make-request
   ([uri] (make-request uri {:request-method :get}))
@@ -9,8 +12,8 @@
 
 
 (def fake-routes {
-   
-   ; Requesting resources yields the master project, and team-rocket's               
+
+   ; Requesting resources yields the master project, and team-rocket's
    "https://jenkins.epfl.ch/sonarqube/api/resources"
    (fn [req] {:status 200 :body
      "[{\"id\":3310,
@@ -64,7 +67,7 @@
           \"site_admin\": false
         },
         \"labels\": [
-    
+
         ],
         \"state\": \"open\",
         \"assignee\": null,
@@ -183,7 +186,11 @@
           \"body\": \"when I put in the tag field dwrtçhtrf the tag is not dwrt,
                       htrf but the tag dwrtçhtrf in offline mode.\"
       }
-    ]"})
+    ]"})})
 
-   ; Add a catch-all fake route to enjure tests don't access the network
-   #".*" (fn [req] {:status 500 :body ""})})
+(defmacro with-fixtures
+  "Runs a test with fake routes, and with a clean database"
+  [ & body ]
+  `(fake/with-fake-routes-in-isolation fake-routes
+    (with-state-changes [(before :facts (db/migrate-database))]
+      ~@body)))
