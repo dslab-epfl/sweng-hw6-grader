@@ -27,13 +27,41 @@
        :repository "sweng-epfl/sweng-2013-team-master"
        :created_at "2013-12-14T14:42:48Z"
        :updated_at "2013-12-15T12:33:48Z"}))
+
   (fact "It can store issues in a database"
     (update-issues-database)
     (map :id (select db/issues (fields :id))) => [24321855, 24293198])
+
   (fact "Multiple updates only query for new issues"
     (update-issues-database)
     (fake/with-fake-routes-in-isolation
       {"https://api.github.com/orgs/sweng-epfl/issues?filter=all&since=2013-12-15T23:04:11Z"
        (fn [req] {:status 200 :body "[]"})}
       (update-issues-database)))
+
+  (fact "It can detect whether an issue belongs to the hw6 contest"
+    (homework6contest-issue? {:labels #{"foo"}}) => false
+    (homework6contest-issue? {:labels #{"Homework6Contest"}}) => true
+    (homework6contest-issue? {:labels #{"hw6contest"}}) => true
+    (homework6contest-issue? {:title "Homework6Contest: This is an issue"}) => true
+    (homework6contest-issue? {:title "Found a bug!"}) => false
+    (homework6contest-issue? {:body "This issue belongs to the homework 6 contest"}) => true
+    (homework6contest-issue? {:body "An update for homework 6"}) => false)
+
+  (fact "It can update an issue without loosing the Homework6Contest label"
+    (update-issue {:labels #{"Homework6Contest"}} {:title "foo"})
+      => {:labels #{"Homework6Contest"} :title "foo"}
+    (update-issue {:labels #{"Homework6Contest"}} {:title "foo" :labels #{"bar"}})
+      => {:labels #{"Homework6Contest" "bar"} :title "foo"}
+    (update-issue {} {:title "An issue for the homework 6 contest"})
+      => {:labels #{"Homework6Contest"} :title "An issue for the homework 6 contest"}
+    (update-issue {} {:title "An unrelated issue"})
+      => {:title "An unrelated issue"})
+
+  (fact "It can update existing issues from GitHub"
+    (update-issues-database)
+    (first (select db/issues (where {:id 24321855}))) => (contains {:title "Homework6Contest: This is an issue title"})
+    (update-issues-database)
+    (first (select db/issues (where {:id 24321855}))) => (contains {:title "Homework6Contest: This is an updated issue title"}))
+
   )

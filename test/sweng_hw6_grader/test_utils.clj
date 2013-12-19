@@ -51,6 +51,73 @@
                 {\"d\":\"2013-12-10T15:19:32+0100\",\"v\":[1415,0,179,757,452,27,0]},
                 {\"d\":\"2013-12-10T15:46:08+0100\",\"v\":[1414,0,178,757,452,27,1]}]}]"})
 
+    "https://api.github.com/orgs/sweng-epfl/issues?filter=all&since=2013-12-15T23:04:11Z"
+    (fn [req] {:status 200 :body
+    "[
+      {
+        \"url\": \"https://api.github.com/repos/sweng-epfl/sweng-2013-team-master/issues/36\",
+        \"id\": 24321855,
+        \"number\": 36,
+        \"title\": \"Homework6Contest: This is an updated issue title\",
+        \"user\": {
+          \"login\": \"SomeStudent\",
+          \"id\": 5492975,
+          \"url\": \"https://api.github.com/users/SomeStudent\",
+          \"type\": \"User\",
+          \"site_admin\": false
+        },
+        \"labels\": [
+
+        ],
+        \"state\": \"closed\",
+        \"assignee\": null,
+        \"milestone\": null,
+        \"comments\": 0,
+        \"created_at\": \"2013-12-15T23:04:11Z\",
+        \"updated_at\": \"2013-12-19T17:00:00Z\",
+        \"closed_at\": \"2013-12-19T17:00:00Z\",
+        \"pull_request\": {
+          \"html_url\": null,
+          \"diff_url\": null,
+          \"patch_url\": null
+        },
+        \"repository\": {
+          \"id\": 12952457,
+          \"name\": \"sweng-2013-team-master\",
+          \"full_name\": \"sweng-epfl/sweng-2013-team-master\",
+          \"owner\": {
+            \"login\": \"sweng-epfl\",
+            \"id\": 2575063,
+            \"type\": \"Organization\",
+            \"site_admin\": false
+          },
+          \"private\": true,
+          \"description\": \"\",
+          \"fork\": false,
+          \"url\": \"https://api.github.com/repos/sweng-epfl/sweng-2013-team-master\",
+          \"created_at\": \"2013-09-19T15:46:54Z\",
+          \"updated_at\": \"2013-12-14T18:18:08Z\",
+          \"pushed_at\": \"2013-12-14T18:18:05Z\",
+          \"homepage\": \"\",
+          \"size\": 2236,
+          \"stargazers_count\": 0,
+          \"watchers_count\": 0,
+          \"language\": \"Java\",
+          \"has_issues\": true,
+          \"has_downloads\": true,
+          \"has_wiki\": true,
+          \"forks_count\": 0,
+          \"mirror_url\": null,
+          \"open_issues_count\": 9,
+          \"forks\": 0,
+          \"open_issues\": 9,
+          \"watchers\": 0,
+          \"default_branch\": \"master\",
+          \"master_branch\": \"master\"
+        },
+        \"body\": \"The body has changed, too\"
+      }]"})
+
     "https://api.github.com/orgs/sweng-epfl/issues?filter=all&since=2013-12-13T18:00:00Z"
     (fn [req] {:status 200 :body
     "[
