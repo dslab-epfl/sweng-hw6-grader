@@ -48,13 +48,16 @@
    [:tr [:th "Final"]
         (map (fn [d] [:td d]) final)]])
 
-(defn score-view [resource metrics initial final score]
+(defn score-view [resource sonarqube-score issues-score]
   (layout (str "Scores for " resource)
-          [:div
-           [:h2 "Issues"]
-           (score-table metrics initial final)
-           [:h2 "Score"]
-           [:p "Your current score is " (format "%.0f" score) " points."]]))
+          [:div sonarqube-score issues-score]))
+
+(defn sonarqube-score-view [resource metrics initial final score]
+  [:div
+   [:h2 "SonarQube Issues"]
+   (score-table metrics initial final)
+   [:h3 "Score"]
+   [:p "Your current score for the SonarQube assignment is " (format "%.0f" score) " points."]])
 
 
 (defn resources [res]
