@@ -7,6 +7,11 @@
             [sweng-hw6-grader.test-utils :refer :all]
             [sweng-hw6-grader.issues :refer :all]))
 
+; Wanna test these private functions
+(def fetch-issues-since (ns-resolve 'sweng-hw6-grader.issues 'fetch-issues-since))
+(def homework6contest-issue? (ns-resolve 'sweng-hw6-grader.issues 'homework6contest-issue?))
+(def update-issue (ns-resolve 'sweng-hw6-grader.issues 'update-issue))
+
 (with-fixtures
   (fact "It can fetch issues from GitHub"
     (fetch-issues-since) => 

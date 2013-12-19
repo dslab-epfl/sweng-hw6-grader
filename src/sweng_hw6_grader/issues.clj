@@ -12,7 +12,7 @@
 ; - Creator
 ; - Repo ID
 
-(defn parse-issue [issue]
+(defn- parse-issue [issue]
   {:id (:id issue)
    :title (:title issue)
    :body (:body issue)
@@ -25,7 +25,7 @@
 
 (def earliest-issue-timestamp "2013-12-13T18:00:00Z")
 
-(defn fetch-issues-since
+(defn- fetch-issues-since
   "Retrieves a list of github issues in the sweng-epfl organization, starting
   from the given date
 
@@ -37,7 +37,7 @@
         parsed-issues (map parse-issue raw-issues)]
     parsed-issues)))
 
-(defn compute-last-update-timestamp
+(defn- compute-last-update-timestamp
   "Retrieves from the database the time that issues were last updated"
   []
   (let [most-recent-issues (select db/issues
@@ -46,19 +46,7 @@
                             (limit 1))]
     (:updated_at (first most-recent-issues))))
 
-(defn update-issues-database []
-  (let [last-update (or (compute-last-update-timestamp) earliest-issue-timestamp)
-        issues (fetch-issues-since last-update)]
-    (doseq [issue issues]
-      (let [old-issue (first (select db/issues (where {:id (:id issue)})))]
-        (if old-issue
-          (let [updated-issue (update-issue old-issue issue)]
-            (update db/issues
-              (set-fields updated-issue)
-              (where {:id (:id issue)})))
-          (insert db/issues (values issues)))))))
-
-(defn homework6contest-issue?
+(defn- homework6contest-issue?
   "Determines whether an issue should be counted for the Homework6Contest or not"
   [issue]
   (let [hw6re #"(?ix) (?: homework | hwk | hw) \s* 6 \s* contest"
@@ -69,7 +57,7 @@
           (re-find hw6re (:body issue-with-defaults)))
       true false)))
 
-(defn update-issue
+(defn- update-issue
   "Takes a previous version of an issue, and an updated version. Returns an issue with updates merged in."
   [old current]
   (assert (= (:id old) (:id current)))
@@ -81,3 +69,16 @@
       (assoc merged-issue :labels new-labels)
       merged-issue)))
 
+(defn update-issues-database
+  "Fetches the latest issues from GitHub and inserts them into the database"
+  []
+  (let [last-update (or (compute-last-update-timestamp) earliest-issue-timestamp)
+        issues (fetch-issues-since last-update)]
+    (doseq [issue issues]
+      (let [old-issue (first (select db/issues (where {:id (:id issue)})))]
+        (if old-issue
+          (let [updated-issue (update-issue old-issue issue)]
+            (update db/issues
+              (set-fields updated-issue)
+              (where {:id (:id issue)})))
+          (insert db/issues (values issues)))))))
